@@ -33,7 +33,7 @@ const submitForm = async () => {
 		});
 		alert(response.data.msg);
 		if (response.status === 200 && response.data.msg === "注册成功") {
-			await router.push('/login'); // 使用 Vue Router 路由到登录页面
+			await router.replace('/login'); // 使用 Vue Router 路由到登录页面
 		}
 	} catch (error) {
 		console.error('Error:', error);

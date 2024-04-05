@@ -31,7 +31,12 @@ const submitForm = async () => {
 		console.log(response);
 		alert(response.data.msg);
 		if (response.status === 200 && response.data.msg === "登录成功") {
-			await router.push('/chat'); // 使用 Vue Router 路由到聊天页面
+			await router.replace({
+				path: '/chat', // 使用 Vue Router 路由到聊天页面
+				query: {
+					uid: username.value
+				}
+			});
 		}
 	} catch (error) {
 		console.error('Error:', error);
