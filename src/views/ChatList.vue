@@ -2,27 +2,28 @@
 	<div class="chat-list">
 		<div class="chat-list-left">
 			<ul>
-				<li v-for="(chat,index) in ChatList" :key="index">
-					<button :class="{ active: chat.isActive }" @click="selectChat(chat.name)" >{{ chat.name }}</button>
+				<li v-for="(chat, index) in ChatList" :key="index">
+					<button :class="{ active: chat.isActive }" @click="selectChat(chat.name)">
+						{{ chat.name }}
+					</button>
 				</li>
 			</ul>
 		</div>
-		<Chat class="chat-list-right" :targetName="targetName" />
+		<Chat class="chat-list-right" :targetName="targetName"/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import {ref} from "vue";
 import Chat from "@/views/Chat.vue";
 
 const ChatList = ref([
 	{name: '李四', isActive: false},
 	{name: '张三', isActive: false},
-	{name: 'Tom', isActive: false},
-	{name: 'Jane', isActive: false},
+	{name: '王五', isActive: false},
 ]);
 
-let targetName = '';
+let targetName = ref('');
 
 function selectChat(name: string) {
 	// 先将所有按钮设置为非激活状态
@@ -31,7 +32,7 @@ function selectChat(name: string) {
 	const selectedChat = ChatList.value.find(chat => chat.name === name);
 	if (selectedChat) {
 		selectedChat.isActive = true;
-		targetName = selectedChat.name;
+		targetName.value = selectedChat.name;
 	}
 }
 </script>
@@ -57,6 +58,7 @@ function selectChat(name: string) {
 	height: 100%;
 	max-width: 80%;
 }
+
 /* 去掉无序列表项的黑点 */
 ul {
 	list-style-type: none;
@@ -71,12 +73,13 @@ li {
 	height: 40px;
 	align-items: center;
 }
+
 button {
 	width: 100%;
 	height: 100%;
 	border: none; /* 去掉按钮的边框 */
 	background: #f2f2f2; /* 按钮的默认背景颜色 */
-	text-align: center;/* 文字居中 */
+	text-align: center; /* 文字居中 */
 }
 
 li button {
@@ -84,11 +87,11 @@ li button {
 }
 
 li button:hover {
-	background-color: #e0e0e0;  /* 鼠标悬停时背景颜色变深 */
+	background-color: #e0e0e0; /* 鼠标悬停时背景颜色变深 */
 }
 
 li button.active {
-	background-color: #c0c0c0;  /* 点击后进一步加深颜色 */
+	background-color: #c0c0c0; /* 点击后进一步加深颜色 */
 }
 
 </style>

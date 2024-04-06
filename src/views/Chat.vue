@@ -4,7 +4,7 @@
 		<hr>
 		<div class="received-message">
 			<ul>
-				<li v-for="value in receivedMessage" >{{ value.sendId }}  {{ value.message }}</li>
+				<li v-for="value in receivedMessage" v-show="value.receiveId">{{ value.sendId }} : {{ value.message }}</li>
 			</ul>
 		</div>
 		<hr>
@@ -17,22 +17,18 @@
 
 <script setup lang="ts" name="Chat">
 import {useRoute} from "vue-router";
-import {inject, ref} from "vue";
+import {ref} from "vue";
 
 const route = useRoute();
 const username = route.query.uid as string;
-
-const targetName = defineProps({
-	targetName: String, // 假设你要接收的是一个字符串类型的名字
-});
-console.log(targetName);
+const targetName = defineProps(['targetName']); // 接收从ChatList.vue传递的targetName
 const message = ref('');
 const receivedMessage = ref([])
 
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
 
-socket.onmessage = function (event) {
+socket.onmessage = function (event) { // 接收消息
 	const data = JSON.parse(event.data);
 	console.log(data);
 	if (data === "有字段为空") {
@@ -42,8 +38,8 @@ socket.onmessage = function (event) {
 	receivedMessage.value.push(data); // 根据实际数据结构更新
 };
 
-const sendMessage = async () => {
-	if (!targetName.targetName || !message.value) {
+const sendMessage = async () => { // 发送消息
+	if (!targetName.targetName || !message.value) { 	// 校验Sender和Message是否为空
 		alert("目标用户和消息不能为空");
 		return;
 	}
@@ -54,6 +50,7 @@ const sendMessage = async () => {
 		msgType: "private",
 		mediaType: "text"
 	}));
+	message.value = ''; // 清空输入框
 };
 </script>
 
