@@ -1,15 +1,20 @@
 <template>
 	<div class="chat-list">
-		<ul>
-			<li v-for="chat in ChatList" :key="chat.id">
-				<button @click="selectChat(chat.id)">{{ chat.name }}</button>
-			</li>
-		</ul>
+		<div class="chat-list-left">
+			<ul>
+				<li v-for="chat in ChatList" :key="chat.id">
+					<button @click="selectChat(chat.id)">{{chat.name}}</button>
+<!--					<routerLink :to="{name: 'Chat', params: {id: chat.id}}"></routerLink>-->
+				</li>
+			</ul>
+		</div>
+		<Chat class="chat-list-right" :targetName="selectChat" />
 	</div>
 </template>
 
 <script setup lang="ts" name="ChatList">
-import {provide, ref} from "vue";
+import {ref} from "vue";
+import Chat from "@/views/Chat.vue";
 
 const ChatList = ref([
 	{id: 1, name: '李四'},
@@ -19,7 +24,6 @@ const ChatList = ref([
 ]);
 
 function selectChat(id: number) {
-	// TODO: implement logic to select chat
 	console.log(ChatList.value[id - 1].name);
 }
 </script>
@@ -27,30 +31,42 @@ function selectChat(id: number) {
 <style scoped>
 .chat-list {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	height: 70vh;
+	overflow-y: auto;
 }
-ul {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	list-style-type: none;
+
+.chat-list-left {
+	flex: 1;
+	max-width: 20%;
+	height: 100%;
+	overflow-y: auto;
 }
-li {
-	width: 100%;
+
+.chat-list-right {
 	border: 1px solid #ccc;
-	cursor: pointer;
+	flex: 1;
+	height: 100%;
+	max-width: 80%;
+}
+/* 去掉无序列表项的黑点 */
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+
+li {
+	border: 1px solid #cccccc;
+	padding: 0;
+	height: 40px;
+	align-items: center;
 }
 button {
-	padding: 10px;
 	width: 100%;
+	height: 100%;
 	border: none;
-	background-color: #fff;
-	color: #333;
-	font-size: 16px;
-	font-weight: bold;
+	background: none;
 	text-align: center;
-	cursor: pointer;
 }
 </style>

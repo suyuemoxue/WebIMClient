@@ -1,10 +1,12 @@
 <template>
 	<div class=" message-sender">
-		<p>{{name}}</p>
+		<p>
+			{{}}
+		</p>
 		<hr>
 		<div class="received-message">
 			<ul>
-				<li v-for="value in receivedMessage" v-show="value.receiveId === targetName">{{ value.sendId }} : {{ value.message }}</li>
+<!--				<li v-for="value in receivedMessage" v-show="value.receiveId === targetName">{{ value.sendId }} : {{ value.message }}</li>-->
 			</ul>
 		</div>
 		<hr>
@@ -25,7 +27,7 @@ const username = route.query.uid as string;
 const targetName = ref('');
 const message = ref('');
 const receivedMessage = ref([])
-const name = inject('name');
+
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
 

@@ -1,7 +1,7 @@
 <template>
-<div class="menu">
-	<h5>{{ username }}</h5>
-</div>
+	<div class="menu">
+		<h5>{{ username }}</h5>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -13,11 +13,13 @@ const username = route.query.uid as string;
 
 <style scoped>
 .menu {
-	background-color: slategray;
+	background-color: #2E2E2E;
 	display: flex;
-	width: 30px;
 	cursor: default;
-	padding: 12px;
+	padding: 5px;
 	transition: background-color 0.1s;
+}
+h5 {
+	color: #fff;
 }
 </style>
