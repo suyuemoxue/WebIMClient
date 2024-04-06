@@ -1,12 +1,10 @@
 <template>
 	<div class=" message-sender">
-		<p>
-			{{}}
-		</p>
+		<p>{{ targetName.targetName }}</p>
 		<hr>
 		<div class="received-message">
 			<ul>
-<!--				<li v-for="value in receivedMessage" v-show="value.receiveId === targetName">{{ value.sendId }} : {{ value.message }}</li>-->
+				<li v-for="value in receivedMessage" >{{ value.sendId }}  {{ value.message }}</li>
 			</ul>
 		</div>
 		<hr>
@@ -24,7 +22,10 @@ import {inject, ref} from "vue";
 const route = useRoute();
 const username = route.query.uid as string;
 
-const targetName = ref('');
+const targetName = defineProps({
+	targetName: String, // 假设你要接收的是一个字符串类型的名字
+});
+console.log(targetName);
 const message = ref('');
 const receivedMessage = ref([])
 
@@ -42,13 +43,13 @@ socket.onmessage = function (event) {
 };
 
 const sendMessage = async () => {
-	if (!targetName.value || !message.value) {
+	if (!targetName.targetName || !message.value) {
 		alert("目标用户和消息不能为空");
 		return;
 	}
 	socket.send(JSON.stringify({
 		sendId: username,
-		receiveId: targetName.value,
+		receiveId: targetName.targetName,
 		message: message.value,
 		msgType: "private",
 		mediaType: "text"
@@ -107,8 +108,9 @@ ul {
 }
 
 p {
-	font-size: 20px;
-	margin-bottom: 30px;
+	font-size: 15px;
+	height: 10px;
+	text-align: center;
 }
 
 hr {
