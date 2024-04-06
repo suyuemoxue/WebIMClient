@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
+import {provide, ref} from 'vue';
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 
@@ -32,7 +32,7 @@ const submitForm = async () => {
 		alert(response.data.msg);
 		if (response.status === 200 && response.data.msg === "登录成功") {
 			await router.replace({
-				path: '/chat', // 使用 Vue Router 路由到聊天页面
+				path: '/wechat', // 使用 Vue Router 路由到聊天页面
 				query: {
 					uid: username.value
 				}

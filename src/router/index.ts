@@ -2,7 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from "@/components/Home.vue";
 import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
-import Chat from "@/components/Chat.vue";
+import WeChat from "@/components/WeChat.vue";
+import Menu from "@/views/Menu.vue";
+import ChatList from "@/views/ChatList.vue";
+import Chat from "@/views/Chat.vue";
 
 
 const router = createRouter({
@@ -24,9 +27,23 @@ const router = createRouter({
       component: Register
     },
     {
-      path:'/chat',
-      name:'chat',
-      component: Chat
+      path:'/wechat',
+      name:'wechat',
+      component: WeChat,
+      // children: [
+      //   {
+      //     path: '',
+      //     component: Menu
+      //   },
+      //   {
+      //     path:'',
+      //     component: ChatList
+      //   },
+      //   {
+      //     path: 'chat',
+      //     component: Chat
+      //   }
+      // ]
     },
   ]
 })
