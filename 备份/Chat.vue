@@ -4,9 +4,7 @@
 		<hr>
 		<div class="received-message">
 			<ul>
-				<li v-for="(value, index) in messageList" v-show="value.receiveId"
-						:class="value.sendId === username? 'right' : 'left'">{{ value.sendId }} : {{ value.content }}
-				</li>
+				<li v-for="value in receivedMessage" v-show="value.receiveId">{{ value.sendId }} : {{ value.message }}</li>
 			</ul>
 		</div>
 		<hr>
@@ -20,27 +18,24 @@
 <script lang="ts" name="Chat" setup>
 import {useRoute} from "vue-router";
 import {ref} from "vue";
-import type {Message, Messages} from "@/types";
 
 const route = useRoute();
-const username = route.query.uid as string; // 获取当前用户的uid
+const username = route.query.uid as string;
 const targetName = defineProps(['targetName']); // 接收从ChatList.vue传递的targetName
 const message = ref('');
-const messageList = ref<Messages>([
-	{sendId: "", receiveId: "", content: "", msgType: "", mediaType: ""},
-])
-// 连接websocket服务端
+const receivedMessage = ref([{}])
+
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
-// 监听websocket服务端消息d
+
 socket.onmessage = function (event) { // 接收消息
-	const receivedMessage = JSON.parse(event.data);
-	console.log(receivedMessage);
-	if (receivedMessage === "有字段为空") {
+	const data = JSON.parse(event.data);
+	console.log(data);
+	if (data === "有字段为空") {
 		alert("目标用户和消息不能为空");
 		return;
 	}
-	messageList.value.push(receivedMessage); // 根据实际数据结构更新
+	receivedMessage.value.push(data); // 根据实际数据结构更新
 };
 
 const sendMessage = async () => { // 发送消息
@@ -48,36 +43,25 @@ const sendMessage = async () => { // 发送消息
 		alert("目标用户和消息不能为空");
 		return;
 	}
-	const sendMessage: Message = {
+	socket.send(JSON.stringify({
 		sendId: username,
 		receiveId: targetName.targetName,
-		content: message.value,
+		message: message.value,
 		msgType: "private",
 		mediaType: "text"
-	}
-	console.log(sendMessage);
-	messageList.value.push(sendMessage);
-	socket.send(JSON.stringify(sendMessage));
+	}));
 	message.value = ''; // 清空输入框
 };
 </script>
 
 <style scoped>
-.left {
-	text-align: left;
-}
-
-.right {
-	text-align: right;
-}
-
 .message-sender {
 	border: 1px solid #ccc;
 	height: 70vh;
 }
 
 .received-message {
-	height: 500px;
+	height: 300px;
 	border-radius: 5px;
 	margin-bottom: 10px;
 	font-size: 16px;

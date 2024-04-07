@@ -1,11 +1,11 @@
 <template>
-<h1>这是一个聊天系统</h1>
+	<h1>这是一个聊天系统</h1>
 	<div>
 		<RouterLink to="login">登录</RouterLink>
 	</div>
 </template>
 
-<script setup lang="ts" name="Home">
+<script lang="ts" name="Home" setup>
 
 </script>
 

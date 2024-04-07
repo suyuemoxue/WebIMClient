@@ -3,51 +3,43 @@
 		<div class="chat-list-left">
 			<ul>
 				<li v-for="(chat, index) in ChatList" :key="index">
-					<button :class="{ active: chat.isActive }" @click="selectChat(chat.name)">{{ chat.name }}</button>
+					<button :class="{ active: chat.isActive }" @click="selectChat(chat.id)">
+						{{ chat.name }}
+					</button>
 				</li>
 			</ul>
-<!--			<ul>-->
-<!--				<li v-for="(chat, index) in MessageList" :key="index">{{ chat.content }}</li>-->
-<!--			</ul>-->
 		</div>
-		<Chat :targetName="targetName" class="chat-list-right" />
+		<Chat :targetName="targetName" class="chat-list-right"/>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {ref} from "vue";
 import Chat from "@/views/Chat.vue";
-import axios from "axios";
-import type {Messages} from "@/types";
+import {useRoute} from "vue-router";
 
+const route = useRoute();
+const username = route.query.uid as string;
 const ChatList = ref([
-	{name: '李四', isActive: false},
-	{name: '张三', isActive: false},
-	{name: '王五', isActive: false},
+	{id: 1, name: '李四', isActive: false},
+	{id: 2, name: '张三', isActive: false},
+	{id: 3, name: '王五', isActive: false},
 ]);
-const MessageList = ref<Messages>([
-	{sendId: "", receiveId: "", content: "", msgType: "", mediaType: ""},
-])
 
 let targetName = ref('');
 
-async function selectChat(name: string) {
+function selectChat(id: number) {
 	// 先将所有按钮设置为非激活状态
 	ChatList.value.forEach(chat => chat.isActive = false);
 	// 然后将当前点击的按钮设置为激活状态
-	const selectedChat = ChatList.value.find(chat => chat.name === name);
+	const selectedChat = ChatList.value.find(chat => chat.id === id);
 	if (selectedChat) {
 		selectedChat.isActive = true;
 		targetName.value = selectedChat.name;
 	}
-	// 向服务端发送请求，获取对方的聊天记录
-	const response = await axios.post("/api/getUserHistoryMessage", {username: targetName.value});
-	console.log(response.data);
-	const jsonArray = response.data.split("\n");
-	MessageList.value.push(jsonArray)
-	console.log(MessageList.value)
 }
 </script>
+
 
 <style scoped>
 .chat-list {

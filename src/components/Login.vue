@@ -1,10 +1,10 @@
 <template>
 	<div class="container">
-		<form @submit.prevent="submitForm" class="form">
+		<form class="form" @submit.prevent="submitForm">
 			<h2>用户登录</h2>
-			<input v-model="username" type="text" placeholder="请输入用户名" required>
+			<input v-model="username" placeholder="请输入用户名" required type="text">
 			<br>
-			<input v-model="password" type="password" placeholder="请输入密码" required>
+			<input v-model="password" placeholder="请输入密码" required type="password">
 			<br>
 			<button type="submit">确认登录</button>
 			<br>
@@ -13,8 +13,8 @@
 	</div>
 </template>
 
-<script setup lang="ts">
-import {provide, ref} from 'vue';
+<script lang="ts" setup>
+import {ref} from 'vue';
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 
@@ -52,6 +52,7 @@ const submitForm = async () => {
 	align-items: center;
 	height: 100vh;
 }
+
 .form {
 	width: 300px;
 	padding: 20px;
@@ -59,10 +60,12 @@ const submitForm = async () => {
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 h2 {
 	text-align: center;
 	margin-bottom: 20px;
 }
+
 input,
 button {
 	width: 100%;
@@ -72,14 +75,17 @@ button {
 	border-radius: 5px;
 	box-sizing: border-box;
 }
+
 button {
 	background-color: #4CAF50;
 	color: white;
 	cursor: pointer;
 }
+
 button:hover {
 	background-color: #45a049;
 }
+
 a {
 	display: block;
 	text-align: center;

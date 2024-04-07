@@ -4,7 +4,7 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useRoute} from "vue-router";
 
 const route = useRoute();
@@ -19,6 +19,7 @@ const username = route.query.uid as string;
 	padding: 5px;
 	transition: background-color 0.1s;
 }
+
 h5 {
 	color: #fff;
 }

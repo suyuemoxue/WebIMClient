@@ -1,12 +1,12 @@
 <template>
 	<div class="container">
-		<form @submit.prevent="submitForm" class="form">
+		<form class="form" @submit.prevent="submitForm">
 			<h2>用户注册</h2>
-			<input v-model="username" type="text" placeholder="请输入用户名" required>
+			<input v-model="username" placeholder="请输入用户名" required type="text">
 			<br>
-			<input v-model="password" type="password" placeholder="请输入密码" required>
+			<input v-model="password" placeholder="请输入密码" required type="password">
 			<br>
-			<input v-model="rePassword" type="password" placeholder="请再次输入密码" required>
+			<input v-model="rePassword" placeholder="请再次输入密码" required type="password">
 			<br>
 			<button type="submit">确认注册</button>
 			<router-link to="login">返回登录界面</router-link>
@@ -14,10 +14,10 @@
 	</div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts" setup>
+import {ref} from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const username = ref('');
 const password = ref('');
@@ -72,14 +72,17 @@ button {
 	border-radius: 5px;
 	box-sizing: border-box;
 }
+
 button {
 	background-color: #4CAF50;
 	color: white;
 	cursor: pointer;
 }
+
 button:hover {
 	background-color: #45a049;
 }
+
 a {
 	display: block;
 	text-align: center;

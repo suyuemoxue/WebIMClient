@@ -1,16 +1,14 @@
 <template>
 	<div class="container">
-		<Menu class="menu" />
+		<Menu class="menu"/>
 		<ChatList class="chatList"/>
-<!--		<Chat class="chat"/>-->
+		<!--		<Chat class="chat"/>-->
 	</div>
 </template>
 
-<script setup lang="ts" name="WeChat">
+<script lang="ts" name="WeChat" setup>
 import Menu from "@/views/Menu.vue";
 import ChatList from "@/views/ChatList.vue";
-import Chat from "@/views/Chat.vue";
-
 </script>
 
 <style scoped>
@@ -19,7 +17,7 @@ import Chat from "@/views/Chat.vue";
 	display: flex;
 	height: 70vh; /* 占据整个视口高度 */
 	width: 60%;
-	margin: 100px auto auto;/* 居中 顶部留白 */
+	margin: 100px auto auto; /* 居中 顶部留白 */
 	overflow-y: auto;
 }
 
