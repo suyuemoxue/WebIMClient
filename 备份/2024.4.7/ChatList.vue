@@ -30,6 +30,18 @@ const MsgList = reactive<Messages>([
 ])
 let targetName = ref('');
 
+// const selectChat = async (name: string) => {
+// 	// 先将所有按钮设置为非激活状态
+// 	ChatList.value.forEach(chat => chat.isActive = false);
+// 	// 然后将当前点击的按钮设置为激活状态
+// 	const selectedChat = ChatList.value.find(chat => chat.name === name);
+// 	if (selectedChat) {
+// 		selectedChat.isActive = true;
+// 		targetName.value = selectedChat.name;
+// 	}
+// 	await getHistoryMessage();
+// }
+
 async function selectChat(name: string) {
 	// 先将所有按钮设置为非激活状态
 	ChatList.value.forEach(chat => chat.isActive = false);
@@ -62,6 +74,7 @@ async function getHistoryMessage() {
 		MsgList.splice(0, MsgList.length);
 		MsgList.push(response.data)
 	}
+	console.log("ChatList:",MsgList);
 }
 </script>
 
@@ -69,7 +82,7 @@ async function getHistoryMessage() {
 .chat-list {
 	display: flex;
 	align-items: center;
-	overflow: hidden;
+	overflow-y: auto;
 }
 
 .chat-list-left {

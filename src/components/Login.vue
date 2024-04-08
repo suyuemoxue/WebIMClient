@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-login">
 		<form class="form" @submit.prevent="submitForm">
 			<h2>用户登录</h2>
 			<input v-model="username" placeholder="请输入用户名" required type="text">
@@ -46,7 +46,7 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-.container {
+.container-login {
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-wechat">
 		<Menu class="menu"/>
 		<ChatList class="chatList"/>
 		<!--		<Chat class="chat"/>-->
@@ -12,13 +12,13 @@ import ChatList from "@/views/ChatList.vue";
 </script>
 
 <style scoped>
-.container {
+.container-wechat {
 	border: 1px solid #000; /* 外边框 */
 	display: flex;
 	height: 70vh; /* 占据整个视口高度 */
 	width: 60%;
 	margin: 100px auto auto; /* 居中 顶部留白 */
-	overflow-y: auto;
+	overflow: hidden; /* 隐藏滚动条 */
 }
 
 .menu {

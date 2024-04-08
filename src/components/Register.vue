@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-register">
 		<form class="form" @submit.prevent="submitForm">
 			<h2>用户注册</h2>
 			<input v-model="username" placeholder="请输入用户名" required type="text">
@@ -43,7 +43,7 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-.container {
+.container-register {
 	display: flex;
 	justify-content: center;
 	align-items: center;

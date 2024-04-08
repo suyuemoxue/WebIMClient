@@ -2,23 +2,15 @@
 	<div class=" message-sender">
 		<p>{{ props.targetName }}</p>
 		<hr>
-		<div class="received-message"> <!-- 接收到的消息 -->
-			<div v-for="(value, index) in props.msgList" v-show="value.receiveId" :key="index"
-					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
-				{{ value.sendId }} : {{ value.content }}
-			</div>
-			<div v-for="(value, index) in messageList" v-show="value.receiveId" :key="index"
-					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
-				{{ value.sendId }} : {{ value.content }}
-			</div>
-<!--						<ul>-->
-<!--							<li v-for="(value, index) in props.msgList" :key="index" v-show="value.receiveId"-->
-<!--									:class="value.sendId === username ? 'my-message' : 'other-message'">{{ value.sendId }} : {{ value.content }}-->
-<!--							</li>-->
-<!--							<li v-for="(value, index) in messageList" v-show="value.receiveId"-->
-<!--									:class="value.sendId === username? 'my-message' : 'other-message'">{{ value.sendId }} : {{ value.content }}-->
-<!--							</li>-->
-<!--						</ul>-->
+		<div class="received-message">
+			<ul>
+				<li v-for="(value, index) in props.msgList" :key="index" v-show="value.receiveId"
+						:class="value.sendId === username ? 'right' : 'left'">{{ value.sendId }} : {{ value.content }}
+				</li>
+				<li v-for="(value, index) in messageList" v-show="value.receiveId"
+						:class="value.sendId === username? 'right' : 'left'">{{ value.sendId }} : {{ value.content }}
+				</li>
+			</ul>
 		</div>
 		<hr>
 		<div class="input-message">
@@ -46,13 +38,13 @@ const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
 // 监听websocket服务端消息d
 socket.onmessage = function (event) { // 接收消息
-	const receiveMsg = JSON.parse(event.data);
-	console.log(receiveMsg);
-	if (receiveMsg === "有字段为空") {
+	const receivedMessage = JSON.parse(event.data);
+	console.log(receivedMessage);
+	if (receivedMessage === "有字段为空") {
 		alert("目标用户和消息不能为空");
 		return;
 	}
-	messageList.push(receiveMsg); // 根据实际数据结构更新
+	messageList.push(receivedMessage); // 根据实际数据结构更新
 };
 
 const sendMessage = async () => { // 发送消息
@@ -75,20 +67,12 @@ const sendMessage = async () => { // 发送消息
 </script>
 
 <style scoped>
-.my-message {
-	text-align: right;
-	background-color: skyblue;
-	padding: 5px;
-	margin: 5px 0;
-	border-radius: 5px;
+.left {
+	text-align: left;
 }
 
-.other-message {
-	text-align: left;
-	background-color: greenyellow;
-	padding: 5px;
-	margin: 5px 0;
-	border-radius: 5px;
+.right {
+	text-align: right;
 }
 
 .message-sender {
@@ -101,8 +85,6 @@ const sendMessage = async () => { // 发送消息
 	border-radius: 5px;
 	margin-bottom: 10px;
 	font-size: 16px;
-	overflow: hidden;
-	overflow-y: auto;
 }
 
 .input-field {
