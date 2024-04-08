@@ -3,14 +3,16 @@
 		<p>{{ props.targetName }}</p>
 		<hr>
 		<div class="received-message"> <!-- 接收到的消息 -->
-			<div v-for="(value, index) in props.msgList" v-show="value.sendId == username || value.receiveId == username" :key="index"
+			<div v-for="(value, index) in props.msgList"
+					 v-show="(value.sendId == username && value.receiveId == props.targetName) || (value.sendId == props.targetName && value.receiveId == username)"
+					 :key="index"
 					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
 				{{ value.sendId }} : {{ value.content }}
 			</div>
-			<div v-for="(value, index) in messageList" v-show="value.sendId == username || value.receiveId == username" :key="index"
-					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
-				{{ value.sendId }} : {{ value.content }}
-			</div>
+			<!--			<div v-for="(value, index) in messageList" v-show="value.sendId == username || value.receiveId == username" :key="index"-->
+			<!--					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">-->
+			<!--				{{ value.sendId }} : {{ value.content }}-->
+			<!--			</div>-->
 		</div>
 		<hr>
 		<div class="input-message">
@@ -22,16 +24,16 @@
 
 <script lang="ts" name="Chat" setup>
 import {useRoute} from "vue-router";
-import {reactive, ref} from "vue";
-import type {Message, Messages} from "@/types";
+import {ref} from "vue";
+import type {Message} from "@/types";
 
 const route = useRoute();
 const username = route.query.uid as string; // 获取当前用户的uid
 const props = defineProps(['targetName', 'msgList']); // 接收从ChatList.vue传递的targetName和msgList
 const message = ref('');
-let messageList = reactive<Messages>([
-	{sendId: "", receiveId: "", content: "", msgType: "", mediaType: ""},
-])
+// let messageList = reactive<Messages>([
+// 	{sendId: "", receiveId: "", content: "", msgType: "", mediaType: ""},
+// ])
 
 // 连接websocket服务端
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
@@ -44,7 +46,7 @@ socket.onmessage = async (event) => { // 接收消息
 		alert("目标用户和消息不能为空");
 		return;
 	}
-	messageList.push(receiveMsg); // 根据实际数据结构更新
+	props.msgList.push(receiveMsg); // 根据实际数据结构更新
 };
 
 const sendMessage = async () => { // 发送消息
@@ -60,7 +62,7 @@ const sendMessage = async () => { // 发送消息
 		mediaType: "text"
 	}
 	console.log(sendMessage);
-	messageList.push(sendMessage);
+	props.msgList.push(sendMessage);
 	socket.send(JSON.stringify(sendMessage));
 	message.value = ''; // 清空输入框
 };
