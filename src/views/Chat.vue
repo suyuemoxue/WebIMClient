@@ -11,14 +11,6 @@
 					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
 				{{ value.sendId }} : {{ value.content }}
 			</div>
-<!--						<ul>-->
-<!--							<li v-for="(value, index) in props.msgList" :key="index" v-show="value.receiveId"-->
-<!--									:class="value.sendId === username ? 'my-message' : 'other-message'">{{ value.sendId }} : {{ value.content }}-->
-<!--							</li>-->
-<!--							<li v-for="(value, index) in messageList" v-show="value.receiveId"-->
-<!--									:class="value.sendId === username? 'my-message' : 'other-message'">{{ value.sendId }} : {{ value.content }}-->
-<!--							</li>-->
-<!--						</ul>-->
 		</div>
 		<hr>
 		<div class="input-message">
