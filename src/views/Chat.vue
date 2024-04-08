@@ -3,11 +3,11 @@
 		<p>{{ props.targetName }}</p>
 		<hr>
 		<div class="received-message"> <!-- 接收到的消息 -->
-			<div v-for="(value, index) in props.msgList" v-show="value.receiveId" :key="index"
+			<div v-for="(value, index) in props.msgList" v-show="value.sendId == username || value.receiveId == username" :key="index"
 					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
 				{{ value.sendId }} : {{ value.content }}
 			</div>
-			<div v-for="(value, index) in messageList" v-show="value.receiveId" :key="index"
+			<div v-for="(value, index) in messageList" v-show="value.sendId == username || value.receiveId == username" :key="index"
 					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
 				{{ value.sendId }} : {{ value.content }}
 			</div>
@@ -37,7 +37,7 @@ let messageList = reactive<Messages>([
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
 // 监听websocket服务端消息d
-socket.onmessage = function (event) { // 接收消息
+socket.onmessage = async (event) => { // 接收消息
 	const receiveMsg = JSON.parse(event.data);
 	console.log(receiveMsg);
 	if (receiveMsg === "有字段为空") {
