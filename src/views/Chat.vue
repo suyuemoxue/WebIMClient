@@ -9,10 +9,6 @@
 					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">
 				{{ value.sendId }} : {{ value.content }}
 			</div>
-			<!--			<div v-for="(value, index) in messageList" v-show="value.sendId == username || value.receiveId == username" :key="index"-->
-			<!--					 :class="{ 'my-message': value.sendId === username, 'other-message': value.sendId !== username }">-->
-			<!--				{{ value.sendId }} : {{ value.content }}-->
-			<!--			</div>-->
 		</div>
 		<hr>
 		<div class="input-message">
@@ -31,9 +27,6 @@ const route = useRoute();
 const username = route.query.uid as string; // 获取当前用户的uid
 const props = defineProps(['targetName', 'msgList']); // 接收从ChatList.vue传递的targetName和msgList
 const message = ref('');
-// let messageList = reactive<Messages>([
-// 	{sendId: "", receiveId: "", content: "", msgType: "", mediaType: ""},
-// ])
 
 // 连接websocket服务端
 const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
