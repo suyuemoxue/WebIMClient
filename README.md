@@ -4,6 +4,6 @@
 
 张三和李四互相发送消息，效果如下所示
 
-<img src="E:/Project/WebProject/WebIMClient/public/预览图1.png">
+<img src="https://github.com/suyuemoxue/WebIMClient/blob/master/public/p1.png">
 
-<img src="E:/Project/WebProject/WebIMClient/public/预览图2.png">
+<img src="https://github.com/suyuemoxue/WebIMClient/blob/master/public/p2.png">
