@@ -29,7 +29,7 @@ const props = defineProps(['targetName', 'msgList']); // 接收从ChatList.vue�
 const message = ref('');
 
 // 连接websocket服务端
-const socketUrl = ref(`ws://localhost:8081/chat?uid=${username}`);
+const socketUrl = ref(`ws://localhost:8081/wechat?uid=${username}`);
 let socket = new WebSocket(socketUrl.value);
 // 监听websocket服务端消息d
 socket.onmessage = async (event) => { // 接收消息
